@@ -83,7 +83,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ Mod1Mask,                     XK_Return, zoom,           {0} },
     { MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } }, //open scratchpad
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("todo") },
@@ -94,6 +94,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,				XK_u,      spawn,          SHCMD("dmumount") },
 	{ MODKEY|ControlMask,			XK_u,      spawn,          SHCMD("dmumount -l") },
 	{ MODKEY|ShiftMask,				XK_c,      spawn,          SHCMD("calendar") },
+	{ MODKEY,						XK_x,      spawn,          SHCMD("xkill") },
+	{ MODKEY,						XK_b,      spawn,          SHCMD("brave") },
+	{ MODKEY,						XK_m,      spawn,          SHCMD("st -t mail -e neomutt") },
 
     /* Multimedia */
 	{ 0,                            XF86XK_AudioLowerVolume , spawn, SHCMD("amixer -q set Master 2%- unmute; kill -44 $(pidof dwmblocks)") },
@@ -125,7 +128,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[2]} },
 
     /* Monitor manipulation */
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },

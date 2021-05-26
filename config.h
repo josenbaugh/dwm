@@ -38,8 +38,7 @@ static const Rule rules[] = {
 	/* class      instance    title					tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,					0,            1,           -1 },
 	{ NULL,       NULL,       "StatusCalendar",		0,            1,           -1 },
-    { "Firefox",  NULL,       NULL,					1 << 8,       0,           -1 },
-    { "Microsoft Teams - Preview",  "microsoft teams - preview",       "Microsoft Teams Notification",       1 << 8,       1,           -1 },
+    { "Brave",	  NULL,       NULL,					1 << 2,       0,           -1 },
 };
 
 
@@ -97,6 +96,7 @@ static Key keys[] = {
 	{ MODKEY,						XK_x,      spawn,          SHCMD("xkill") },
 	{ MODKEY,						XK_b,      spawn,          SHCMD("brave") },
 	{ MODKEY,						XK_m,      spawn,          SHCMD("st -t mail -e neomutt") },
+	{ MODKEY,						XK_s,      spawn,          SHCMD("mailsync") },
 
     /* Multimedia */
 	{ 0,                            XF86XK_AudioLowerVolume , spawn, SHCMD("amixer -q set Master 2%- unmute; kill -44 $(pidof dwmblocks)") },

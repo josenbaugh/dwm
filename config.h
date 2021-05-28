@@ -3,19 +3,18 @@
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 6;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;		/* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-// static const char *fonts[]          = { "DejaVuSansMono Nerd Font:size=8" };
 static const char *fonts[]          = { 
 	"Hack Nerd Font:size=8.5",
 	"Noto Color Emoji:pixelsize=10:antialias=true:autohint=true"
 };
 static const char dmenufont[]          = "Hack Nerd Font:size=8.5";
-// static const char dmenufont[]       = "DejaVuSansMono Nerd Fon:size=8";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -35,10 +34,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title					tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,					0,            1,           -1 },
-	{ NULL,       NULL,       "StatusCalendar",		0,            1,           -1 },
-    { "Brave",	  NULL,       NULL,					1 << 2,       0,           -1 },
+	/* class			instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",			NULL,     NULL,           0,         1,          0,           0,        -1 },
+    { NULL,				NULL,    "StatusCalendar",0,         1,          0,			 -1,		-1 },
+	{ "Brave",			NULL,     NULL,           1 << 2,    0,          0,          -1,        -1 },
+	{ NULL,				NULL,     "mail",         1 << 7,    0,          0,          -1,        -1 },
+	{ "st-256color",	NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,				NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+
 };
 
 
@@ -86,7 +89,8 @@ static Key keys[] = {
 	{ Mod1Mask,                     XK_Return, zoom,           {0} },
     { MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } }, //open scratchpad
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          SHCMD("todo") },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("scrotclip") },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("scrotclip -c") },
+	{ MODKEY,			            XK_p,      spawn,          SHCMD("scrotclip /home/josh/pictures") },
 	{ MODKEY|ShiftMask,				XK_m,      spawn,          SHCMD("manmenu") },
 	{ MODKEY|ShiftMask,				XK_e,      spawn,          SHCMD("dmenuunicode") },
 	{ MODKEY,						XK_u,      spawn,          SHCMD("dmmount") },
@@ -123,9 +127,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
 
     /* Layout manipulation */
-	{ MODKEY,                       XK_Tab,    view,           {0} }, //back and forth between views
 	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
-	{ MODKEY|ControlMask,           XK_space,  togglefloating, {0} },
+	{ MODKEY|ControlMask,           XK_space,  togglefloating, {0} }, //toggle floating for selected window
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[2]} },
@@ -142,6 +145,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_r,      quit,           {1} }, //restart dwm
 
     /* Tag Keys */
+	{ MODKEY,                       XK_Tab,    view,           {0} }, //back and forth between tags
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } }, //view all tags
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)

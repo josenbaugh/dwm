@@ -39,8 +39,13 @@ static const Rule rules[] = {
     { NULL,             NULL,    "StatusCalendar",      0,         1,          0,          -1,        -1 },
     { NULL,             NULL,    "galculator",          0,         1,          0,          -1,        -1 },
     { NULL,             NULL,    "zoom",                0,         1,          0,          -1,        -1 }, //zoom popups
+    { NULL,             NULL,    "Nitrogen",            0,         1,          0,          -1,        -1 },
+    { NULL,             NULL,    "PictureInPicture",    0,         1,          0,          -1,        -1 },
+    { NULL,             NULL,    "Volume Control",      0,         1,          0,          -1,        -1 },
+    { NULL,             NULL,    "xaskpass",            0,         1,          0,          -1,        -1 },
+    { "Pcmanfm",        NULL,     NULL,                 0,         1,          0,          -1,        -1 },
     { "1Password",      NULL,     NULL,                 0,         1,          0,          -1,        -1 },
-    { "firefox",          NULL,     NULL,                 1 << 2,    0,          0,          -1,        -1 },
+    { "firefox",        NULL,     NULL,                 1 << 2,    0,          0,          -1,        -1 },
     { "Slack",          NULL,     NULL,                 1 << 5,    0,          0,          -1,        -1 },
     { "DBeaver",        NULL,     NULL,                 1 << 6,    0,          0,          -1,        -1 },
     { NULL,             NULL,     "mail",               1 << 7,    0,          0,          -1,        -1 },
@@ -79,7 +84,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-c", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
@@ -111,6 +116,9 @@ static Key keys[] = {
     { MODKEY,                       XK_m,      spawn,          SHCMD("st -t mail -e neomutt") },
     { MODKEY,                       XK_r,      spawn,          SHCMD("st -t rss -e newsboat") },
     { MODKEY,                       XK_s,      spawn,          SHCMD("mailsync") },
+    { MODKEY,                       XK_o,      spawn,          SHCMD("processes") },
+    { MODKEY,                       XK_e,      spawn,          SHCMD("pcmanfm") },
+    { MODKEY,                       XK_a,      spawn,          SHCMD("totp") },
 
     /* Multimedia */
     { 0,                            XF86XK_AudioLowerVolume , spawn, SHCMD("amixer -q set Master 2%- unmute; kill -44 $(pidof dwmblocks)") },
@@ -120,6 +128,9 @@ static Key keys[] = {
     { 0,                            XF86XK_MonBrightnessDown, spawn, SHCMD("xbacklight -dec 2.5; kill -45 $(pidof dwmblocks)") },
     { 0,                            XF86XK_Mail             , spawn, SHCMD("xbacklight -inc 2.5; kill -45 $(pidof dwmblocks)") }, //brightness up for velocifire
     { 0,                            XF86XK_Tools            , spawn, SHCMD("xbacklight -dec 2.5; kill -45 $(pidof dwmblocks)") }, //brightness up for velocifire
+    { 0,                            XF86XK_AudioNext        , spawn, SHCMD("bright Up; kill -46 $(pidof dwmblocks)") },
+    { 0,                            XF86XK_AudioPrev        , spawn, SHCMD("bright Down; kill -46 $(pidof dwmblocks)") },
+    { 0,                            XK_Print                , spawn, SHCMD("flameshot gui") },
 
     /* Window manipulation */
     { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, //send window to tag
